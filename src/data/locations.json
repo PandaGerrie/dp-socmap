@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "GO! freinetschool De Pluim",
+    "address": "Pauwenlaan 55 - 2660 Hoboken",
+    "type": "School",
+    "masterType": "Ignore",
+    "icon": "dePluim",
+    "latitude": 51.169480,
+    "longitude": 4.360510
+  },
+  {
+    "id": 2,
+    "name": "Groepspraktijk Ridderveld",
+    "address": "Ridderveld 19, 2610 Wilrijk",
+    "type": "Logopedie",
+    "masterType": "Begeleiding",
+    "icon": "Begeleiding",
+    "latitude": 51.177056,
+    "longitude": 4.374155
+  },
+  {
+    "id": 3,
+    "name": "Kinder- en jeugdpsycholoog Eva Springael",
+    "address": "Kolonel Harrystraat 19, 2660 Hoboken",
+    "type": "Kinder- en jeugdpsycholoog",
+    "masterType": "Begeleiding",
+    "icon": "Begeleiding",
+    "latitude": 51.172328,
+    "longitude": 4.371387
+  },
+  {
+    "id": 4,
+    "name": "Geefkast - DeGever",
+    "address": "Leopoldlei 7, 2660 Hoboken",
+    "type": "Geefkast",
+    "masterType": "Geefwinkels & -kasten",
+    "icon": "Gift",
+    "latitude": 51.1789709,
+    "longitude": 4.3574447
+  },
+  {
+    "id": 5,
+    "name": "GeefWinkel - DeGever",
+    "address": "Groenstraat 11, 2610 Wilrijk",
+    "type": "Geefwinkel",
+    "masterType": "Geefwinkels & -kasten",
+    "icon": "Gift",
+    "latitude": 51.16331,
+    "longitude": 4.358973
+  }
+]

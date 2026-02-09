@@ -1,0 +1,167 @@
+.map-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  transition: padding-left 0.3s ease;
+}
+
+.map-container.sidebar-open {
+  padding-left: 350px;
+}
+
+.marker-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marker-icon {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.marker-icon{
+  transform: scale(1.2);
+}
+
+.marker-icon:hover {
+  transform: scale(1.4);
+}
+
+.marker-icon img {
+  display: block;
+  border-radius: 50%;
+  border: 3px solid #1D2C48;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.distance-bubble {
+  position: absolute;
+  top: -35px;
+  background: #1D2C48;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.distance-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #1D2C48;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.searched-marker {
+  cursor: pointer;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Popup styling */
+.maplibregl-popup{
+  margin-top: -30px; 
+}
+
+.maplibregl-popup-content {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  min-width: 350px;
+}
+
+.maplibregl-popup-close-button {
+  font-size: 20px !important;
+  padding: 8px 12px !important;
+  color: #1D2C48 !important;
+  right: 5px !important;
+  top: 5px !important;
+}
+
+.maplibregl-popup-close-button:hover {
+  background-color: #f0f0f0 !important;
+  border-radius: 50%;
+}
+
+.location-popup {
+  padding: 20px;
+}
+
+.location-popup h3 {
+  margin: 0 0 15px 0;
+  color: #1D2C48;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-right: 20px;
+}
+
+.popup-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.popup-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.popup-text {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Custom control styling */
+.maplibregl-ctrl-group {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 8px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.maplibregl-ctrl-group button {
+  border-radius: 4px !important;
+}
+
+.maplibregl-ctrl-group button:hover {
+  background-color: #f0f0f0 !important;
+}
