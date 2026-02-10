@@ -1,0 +1,114 @@
+{
+  "nl": {
+    "header": {
+      "title": "Sociale Kaart Antwerpen"
+    },
+    "sidebar": {
+      "yourLocation": "Jouw locatie",
+      "locationDescription": "Geef het adres van je thuislocatie om de afstand van je zoekresultaten tot deze locatie te bekijken.",
+      "searchPlaceholder": "Voer adres of plaats in...",
+      "searchButton": "🔍",
+      "searching": "...",
+      "clearSelection": "Wis selectie",
+      "yourSearch": "Jouw Zoekopdracht",
+      "searchDescription": "Filter naar het type organisatie of persoon die je zoekt.",
+      "selectCategories": "Selecteer categorieën...",
+      "selected": "geselecteerd",
+      "searchCategories": "Zoek categorieën...",
+      "noResults": "Geen resultaten gevonden",
+      "clearAllFilters": "Wis alle filters",
+      "schoolRadius": "Radius van de school (KM)",
+      "addressRadius": "Radius van gekozen adres (KM)"
+    },
+    "map": {
+      "result": "resultaat",
+      "results": "resultaten",
+      "found": "gevonden",
+      "resultsTitle": "Resultaten"
+    }
+  },
+  "fr": {
+    "header": {
+      "title": "Carte Sociale Anvers"
+    },
+    "sidebar": {
+      "yourLocation": "Votre emplacement",
+      "locationDescription": "Entrez l'adresse de votre domicile pour voir la distance de vos résultats de recherche à cet endroit.",
+      "searchPlaceholder": "Entrez l'adresse ou le lieu...",
+      "searchButton": "🔍",
+      "searching": "...",
+      "clearSelection": "Effacer la sélection",
+      "yourSearch": "Votre Recherche",
+      "searchDescription": "Filtrez par type d'organisation ou de personne que vous recherchez.",
+      "selectCategories": "Sélectionner les catégories...",
+      "selected": "sélectionné",
+      "searchCategories": "Rechercher des catégories...",
+      "noResults": "Aucun résultat trouvé",
+      "clearAllFilters": "Effacer tous les filtres",
+      "schoolRadius": "Rayon de l'école (KM)",
+      "addressRadius": "Rayon de l'adresse choisie (KM)"
+    },
+    "map": {
+      "result": "résultat",
+      "results": "résultats",
+      "found": "trouvé",
+      "resultsTitle": "Résultats"
+    }
+  },
+  "en": {
+    "header": {
+      "title": "Social Map Antwerp"
+    },
+    "sidebar": {
+      "yourLocation": "Your location",
+      "locationDescription": "Enter your home address to see the distance of your search results to this location.",
+      "searchPlaceholder": "Enter address or place...",
+      "searchButton": "🔍",
+      "searching": "...",
+      "clearSelection": "Clear selection",
+      "yourSearch": "Your Search",
+      "searchDescription": "Filter by the type of organization or person you are looking for.",
+      "selectCategories": "Select categories...",
+      "selected": "selected",
+      "searchCategories": "Search categories...",
+      "noResults": "No results found",
+      "clearAllFilters": "Clear all filters",
+      "schoolRadius": "School radius (KM)",
+      "addressRadius": "Address radius (KM)"
+    },
+    "map": {
+      "result": "result",
+      "results": "results",
+      "found": "found",
+      "resultsTitle": "Results"
+    }
+  },
+  "ber": {
+    "header": {
+      "title": "Takarḍa Tanaməɣt n Anvers"
+    },
+    "sidebar": {
+      "yourLocation": "Adig-nnek",
+      "locationDescription": "Sekcem tansa n wexxam-nnek i wakken ad tẓerreḍ abεed n yigmaḍ n unadi-nnek ɣer udig-a.",
+      "searchPlaceholder": "Sekcem tansa neɣ amḍiq...",
+      "searchButton": "🔍",
+      "searching": "...",
+      "clearSelection": "Kkes aγaraw",
+      "yourSearch": "Anadi-nnek",
+      "searchDescription": "Sizdeg s wanaw n tuddsa neɣ n wemdan i tettnadiḍ.",
+      "selectCategories": "Fren taggayin...",
+      "selected": "yettwafren",
+      "searchCategories": "Nadi taggayin...",
+      "noResults": "Ulac igmaḍ",
+      "clearAllFilters": "Kkes akk imzizdigen",
+      "schoolRadius": "Azaglu n tesnawit (KM)",
+      "addressRadius": "Azaglu n tansa yettwafren (KM)"
+    },
+    "map": {
+      "result": "agmaḍ",
+      "results": "igmaḍ",
+      "found": "yettwafen",
+      "resultsTitle": "Igmaḍ"
+    }
+  }
+}

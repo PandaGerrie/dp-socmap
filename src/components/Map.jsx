@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
-import Map, { Marker, NavigationControl, GeolocateControl, ScaleControl, Popup } from 'react-map-gl/maplibre'
+import Map, { Marker, NavigationControl, GeolocateControl, ScaleControl, Popup, Source, Layer } from 'react-map-gl/maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import './Map.css'
 import locations from '../data/locations.json'
+import { useLanguage } from '../context/LanguageContext'
 
 const ANTWERP_COORDS = {
   latitude: 51.178220,
@@ -10,7 +11,8 @@ const ANTWERP_COORDS = {
   zoom: 14
 }
 
-function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
+function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes, schoolRadius, addressRadius }) {
+  const { t } = useLanguage()
   const mapRef = useRef()
   const [viewState, setViewState] = useState({
     longitude: ANTWERP_COORDS.longitude,
@@ -18,6 +20,7 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
     zoom: ANTWERP_COORDS.zoom
   })
   const [selectedLocation, setSelectedLocation] = useState(null)
+  const [isListViewOpen, setIsListViewOpen] = useState(false)
 
   // Filter locations based on selected types
   // "Ignore" masterType always shows regardless of filters
@@ -45,6 +48,47 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
     return R * c // Distance in km
   }
 
+  // Create circle polygon for radius display
+  const createCircle = (center, radiusInKm, points = 64) => {
+    const coords = {
+      latitude: center[1],
+      longitude: center[0]
+    }
+    
+    const ret = []
+    const distanceX = radiusInKm / (111.320 * Math.cos(coords.latitude * Math.PI / 180))
+    const distanceY = radiusInKm / 110.574
+
+    for (let i = 0; i < points; i++) {
+      const theta = (i / points) * (2 * Math.PI)
+      const x = distanceX * Math.cos(theta)
+      const y = distanceY * Math.sin(theta)
+      ret.push([coords.longitude + x, coords.latitude + y])
+    }
+    ret.push(ret[0])
+
+    return {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [ret]
+      }
+    }
+  }
+
+  // Get marker with ID 1 (school)
+  const schoolMarker = locations.find(loc => loc.id === 1)
+
+  // Create circle data for school radius
+  const schoolCircle = schoolRadius && parseFloat(schoolRadius) > 0 && schoolMarker
+    ? createCircle([schoolMarker.longitude, schoolMarker.latitude], parseFloat(schoolRadius))
+    : null
+
+  // Create circle data for address radius
+  const addressCircle = addressRadius && parseFloat(addressRadius) > 0 && searchedLocation
+    ? createCircle([searchedLocation.longitude, searchedLocation.latitude], parseFloat(addressRadius))
+    : null
+
   // Handle map movement and log coordinates
   const handleMove = (evt) => {
     const { longitude, latitude, zoom } = evt.viewState
@@ -65,6 +109,52 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
         <NavigationControl position="top-right" />
         <GeolocateControl position="top-right" />
         <ScaleControl position="bottom-left" />
+        
+        {/* School radius circle */}
+        {schoolCircle && (
+          <Source id="school-radius-circle" type="geojson" data={schoolCircle}>
+            <Layer
+              id="school-radius-fill"
+              type="fill"
+              paint={{
+                'fill-color': '#1D2C48',
+                'fill-opacity': 0.15
+              }}
+            />
+            <Layer
+              id="school-radius-outline"
+              type="line"
+              paint={{
+                'line-color': '#1D2C48',
+                'line-width': 2,
+                'line-dasharray': [2, 2]
+              }}
+            />
+          </Source>
+        )}
+
+        {/* Address radius circle */}
+        {addressCircle && (
+          <Source id="address-radius-circle" type="geojson" data={addressCircle}>
+            <Layer
+              id="address-radius-fill"
+              type="fill"
+              paint={{
+                'fill-color': '#e74c3c',
+                'fill-opacity': 0.15
+              }}
+            />
+            <Layer
+              id="address-radius-outline"
+              type="line"
+              paint={{
+                'line-color': '#e74c3c',
+                'line-width': 2,
+                'line-dasharray': [2, 2]
+              }}
+            />
+          </Source>
+        )}
         
         {/* Markers from locations.json */}
         {filteredLocations.map((location) => {
@@ -88,7 +178,10 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
               <div className="marker-wrapper">
                 <div 
                   className="marker-icon" 
-                  onClick={() => setSelectedLocation(location)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSelectedLocation(location)
+                  }}
                 >
                   <img 
                     src={getIconPath(location.icon)} 
@@ -134,7 +227,7 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
             latitude={selectedLocation.latitude}
             anchor="top"
             onClose={() => setSelectedLocation(null)}
-            closeOnClick={false}
+            closeOnClick={true}
             offset={45}
           >
             <div className="location-popup">
@@ -153,6 +246,102 @@ function MapComponent({ searchedLocation, isSidebarCollapsed, selectedTypes }) {
           </Popup>
         )}
       </Map>
+      
+      {/* Results counter bubble (excluding "Ignore" masterType) */}
+      {(() => {
+        const resultsCount = filteredLocations.filter(loc => loc.masterType !== 'Ignore').length
+        return (
+          <div className="results-counter" onClick={() => setIsListViewOpen(!isListViewOpen)} style={{ cursor: 'pointer', pointerEvents: 'auto' }}>
+            {resultsCount} {resultsCount === 1 ? t('map.result') : t('map.results')} {t('map.found')}
+            <svg className="view-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="16" height="3" rx="1" fill="currentColor"/>
+              <rect x="2" y="8.5" width="16" height="3" rx="1" fill="currentColor"/>
+              <rect x="2" y="14" width="16" height="3" rx="1" fill="currentColor"/>
+            </svg>
+          </div>
+        )
+      })()}
+
+      {/* List view panel */}
+      <div className={`list-view-panel ${isListViewOpen ? 'open' : ''}`}>
+        <div className="list-view-header">
+          <h3>{t('map.resultsTitle')}</h3>
+          <button className="list-view-close" onClick={() => setIsListViewOpen(false)}>✕</button>
+        </div>
+        <div className="list-view-content">
+          {(() => {
+            // Group locations by masterType
+            const grouped = {}
+            filteredLocations
+              .filter(loc => loc.masterType !== 'Ignore')
+              .forEach(loc => {
+                if (!grouped[loc.masterType]) {
+                  grouped[loc.masterType] = []
+                }
+                // Add distance to location object if searchedLocation exists
+                const locationWithDistance = searchedLocation 
+                  ? {
+                      ...loc,
+                      distance: calculateDistance(
+                        loc.latitude,
+                        loc.longitude,
+                        searchedLocation.latitude,
+                        searchedLocation.longitude
+                      )
+                    }
+                  : loc
+                grouped[loc.masterType].push(locationWithDistance)
+              })
+            
+            // Sort masterTypes alphabetically
+            const sortedMasterTypes = Object.keys(grouped).sort()
+            
+            // Sort locations within each group by distance if searchedLocation exists
+            if (searchedLocation) {
+              sortedMasterTypes.forEach(masterType => {
+                grouped[masterType].sort((a, b) => a.distance - b.distance)
+              })
+            }
+            
+            return sortedMasterTypes.map(masterType => (
+              <div key={masterType} className="list-view-section">
+                <div className="list-view-section-header">{masterType}</div>
+                {grouped[masterType].map((location) => (
+                  <div 
+                    key={location.id} 
+                    className="list-view-item"
+                    onClick={() => {
+                      setSelectedLocation(location)
+                      setViewState({
+                        ...viewState,
+                        longitude: location.longitude,
+                        latitude: location.latitude,
+                        zoom: 15
+                      })
+                    }}
+                  >
+                    <div className="list-view-icon">
+                      <img 
+                        src={getIconPath(location.icon)} 
+                        alt={location.name}
+                      />
+                    </div>
+                    <div className="list-view-info">
+                      <div className="list-view-name">{location.name}</div>
+                      <div className="list-view-address">{location.address}</div>
+                    </div>
+                    {location.distance !== undefined && (
+                      <div className="list-view-distance">
+                        {location.distance.toFixed(2)} km
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))
+          })()}
+        </div>
+      </div>
     </div>
   )
 }

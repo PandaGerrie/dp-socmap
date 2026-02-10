@@ -48,5 +48,46 @@
     "icon": "Gift",
     "latitude": 51.16331,
     "longitude": 4.358973
+  },
+  {
+    "id": 6,
+    "name": "Geefkast - Damplein",
+    "address": "Damplein, 2000 Antwerpen",
+    "type": "Geefkast",
+    "masterType": "Geefwinkels & -kasten",
+    "icon": "Gift",
+    "latitude": 51.232403,
+    "longitude": 4.424712
+  },{
+    "id": 7,
+    "name": "The Comback",
+    "address": "Turnhoutsebaan 98, 2140 Antwerpen",
+    "type": "Geefkast",
+    "masterType": "Geefwinkels & -kasten",
+    "icon": "Gift",
+    "latitude": 51.214096,
+    "longitude":4.441548
+  },
+  {
+    "id": 8,
+    "name": "Wijkcentrum De Shelter",
+    "address": "Langstraat 102, 2140 Antwerpen",
+    "type": "Wijkcentrum",
+    "masterType": "Hulpcentra",
+    "icon": "Centra",
+    "latitude": 51.212563,
+    "longitude": 4.433633
+  },
+  {
+    "id": 9,
+    "name": "Sociaal centrum Hoboken en Kiel (OCMW)",
+    "address": "Antwerpsesteenweg 167, 2660 Hoboken",
+    "type": "OCMW",
+    "masterType": "Hulpcentra",
+    "icon": "Centra",
+    "latitude": 51.179039,
+    "longitude": 4.362102
   }
 ]
+
+

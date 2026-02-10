@@ -1,8 +1,10 @@
 import { useState, useMemo } from 'react'
 import './Sidebar.css'
 import locations from '../data/locations.json'
+import { useLanguage } from '../context/LanguageContext'
 
-function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocation, selectedTypes, setSelectedTypes }) {
+function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocation, selectedTypes, setSelectedTypes, schoolRadius, setSchoolRadius, addressRadius, setAddressRadius }) {
+  const { t } = useLanguage()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [isSearching, setIsSearching] = useState(false)
@@ -99,19 +101,19 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
     <>
       <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-content">
-          <h2>Jouw locatie</h2>
-          <p> Geef het adres van je thuislocatie om de afstand van je zoekresultaten tot deze locatie te bekijken.</p>
+          <h2>{t('sidebar.yourLocation')}</h2>
+          <p>{t('sidebar.locationDescription')}</p>
           
           <form onSubmit={handleSearch} className="search-form">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Enter address or place..."
+              placeholder={t('sidebar.searchPlaceholder')}
               className="search-input"
             />
             <button type="submit" className="search-button" disabled={isSearching}>
-              {isSearching ? '...' : '🔍'}
+              {isSearching ? t('sidebar.searching') : t('sidebar.searchButton')}
             </button>
           </form>
 
@@ -125,7 +127,7 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
               <button 
                 className="clear-selection-button" 
                 onClick={handleClearSelection}
-                title="Clear selection"
+                title={t('sidebar.clearSelection')}
               >
                 ✕
               </button>
@@ -147,8 +149,8 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
             </div>
           )}
           <hr className="sidebar-divider" />
-          <h2>Jouw Zoekopdracht</h2>
-          <p>Filter naar het type organisatie of persoon die je zoekt.</p>
+          <h2>{t('sidebar.yourSearch')}</h2>
+          <p>{t('sidebar.searchDescription')}</p>
           
           {/* Multiselect dropdown */}
           <div className="filter-dropdown-container">
@@ -158,8 +160,8 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
             >
               <span className="filter-dropdown-text">
                 {selectedTypes.length === 0 
-                  ? 'Selecteer categorieën...' 
-                  : `${selectedTypes.length} geselecteerd`}
+                  ? t('sidebar.selectCategories')
+                  : `${selectedTypes.length} ${t('sidebar.selected')}`}
               </span>
               <span className="filter-dropdown-arrow">{isFilterDropdownOpen ? '▲' : '▼'}</span>
             </button>
@@ -169,7 +171,7 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
                 <div className="filter-search-container">
                   <input
                     type="text"
-                    placeholder="Zoek categorieën..."
+                    placeholder={t('sidebar.searchCategories')}
                     value={filterSearchQuery}
                     onChange={(e) => setFilterSearchQuery(e.target.value)}
                     className="filter-search-input"
@@ -200,7 +202,7 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
                       </div>
                     ))
                   ) : (
-                    <div className="filter-no-results">Geen resultaten gevonden</div>
+                    <div className="filter-no-results">{t('sidebar.noResults')}</div>
                   )}
                 </div>
 
@@ -209,7 +211,7 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
                     className="filter-clear-button"
                     onClick={handleClearFilters}
                   >
-                    Wis alle filters
+                    {t('sidebar.clearAllFilters')}
                   </button>
                 )}
               </div>
@@ -232,6 +234,36 @@ function Sidebar({ onLocationSearch, isCollapsed, setIsCollapsed, searchedLocati
               ))}
             </div>
           )}
+
+          {/* Radius input fields */}
+          <div className="radius-inputs">
+            <div className="radius-input-row radius-input-right">
+              <input
+                type="number"
+                value={schoolRadius}
+                onChange={(e) => setSchoolRadius(e.target.value)}
+                placeholder="0"
+                className="radius-input-field"
+                min="0"
+                step="0.1"
+              />
+              <label className="radius-input-label">{t('sidebar.schoolRadius')}</label>
+            </div>
+
+            <div className="radius-input-row radius-input-left">
+              <label className="radius-input-label">{t('sidebar.addressRadius')}</label>
+              <input
+                type="number"
+                value={addressRadius}
+                onChange={(e) => setAddressRadius(e.target.value)}
+                placeholder="0"
+                className="radius-input-field"
+                min="0"
+                step="0.1"
+                disabled={!searchedLocation}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
