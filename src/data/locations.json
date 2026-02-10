@@ -30,26 +30,6 @@
     "longitude": 4.371387
   },
   {
-    "id": 4,
-    "name": "Geefkast - DeGever",
-    "address": "Leopoldlei 7, 2660 Hoboken",
-    "type": "Geefkast",
-    "masterType": "Geefwinkels & -kasten",
-    "icon": "Gift",
-    "latitude": 51.1789709,
-    "longitude": 4.3574447
-  },
-  {
-    "id": 5,
-    "name": "GeefWinkel - DeGever",
-    "address": "Groenstraat 11, 2610 Wilrijk",
-    "type": "Geefwinkel",
-    "masterType": "Geefwinkels & -kasten",
-    "icon": "Gift",
-    "latitude": 51.16331,
-    "longitude": 4.358973
-  },
-  {
     "id": 6,
     "name": "Geefkast - Damplein",
     "address": "Damplein, 2000 Antwerpen",
